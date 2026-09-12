@@ -1,0 +1,359 @@
+MemAvailable at start 28.264087677001953
+[mem] start fast_nt_signed: MemAvailable=28.3G
+[mem] signed start: MemAvailable=28.3G
+reusing unsigned nodes=88384522
+[mem] signed after NT tables: MemAvailable=22.7G
+[mem] signed count chunk 0: MemAvailable=22.7G
+[mem] signed count chunk 1000000: MemAvailable=22.7G
+[mem] signed count chunk 2000000: MemAvailable=22.7G
+[mem] signed count chunk 3000000: MemAvailable=22.7G
+[mem] signed count chunk 4000000: MemAvailable=22.7G
+[mem] signed count chunk 5000000: MemAvailable=22.7G
+[mem] signed count chunk 6000000: MemAvailable=22.7G
+[mem] signed count chunk 7000000: MemAvailable=22.7G
+[mem] signed count chunk 8000000: MemAvailable=22.7G
+[mem] signed count chunk 9000000: MemAvailable=22.7G
+[mem] signed count chunk 10000000: MemAvailable=22.7G
+[mem] signed count chunk 11000000: MemAvailable=22.7G
+[mem] signed count chunk 12000000: MemAvailable=22.7G
+[mem] signed count chunk 13000000: MemAvailable=22.7G
+[mem] signed count chunk 14000000: MemAvailable=22.7G
+[mem] signed count chunk 15000000: MemAvailable=22.7G
+[mem] signed count chunk 16000000: MemAvailable=22.7G
+[mem] signed count chunk 17000000: MemAvailable=22.7G
+[mem] signed count chunk 18000000: MemAvailable=22.7G
+[mem] signed count chunk 19000000: MemAvailable=22.7G
+[mem] signed count chunk 20000000: MemAvailable=22.7G
+[mem] signed count chunk 21000000: MemAvailable=22.8G
+[mem] signed count chunk 22000000: MemAvailable=22.8G
+[mem] signed count chunk 23000000: MemAvailable=22.8G
+[mem] signed count chunk 24000000: MemAvailable=22.8G
+[mem] signed count chunk 25000000: MemAvailable=22.7G
+[mem] signed count chunk 26000000: MemAvailable=22.7G
+[mem] signed count chunk 27000000: MemAvailable=22.7G
+[mem] signed count chunk 28000000: MemAvailable=22.7G
+[mem] signed count chunk 29000000: MemAvailable=22.8G
+[mem] signed count chunk 30000000: MemAvailable=22.8G
+[mem] signed count chunk 31000000: MemAvailable=22.8G
+[mem] signed count chunk 32000000: MemAvailable=22.8G
+[mem] signed count chunk 33000000: MemAvailable=22.8G
+[mem] signed count chunk 34000000: MemAvailable=22.8G
+[mem] signed count chunk 35000000: MemAvailable=22.8G
+[mem] signed count chunk 36000000: MemAvailable=22.8G
+[mem] signed count chunk 37000000: MemAvailable=22.8G
+[mem] signed count chunk 38000000: MemAvailable=22.8G
+[mem] signed count chunk 39000000: MemAvailable=22.8G
+[mem] signed count chunk 40000000: MemAvailable=22.8G
+[mem] signed count chunk 41000000: MemAvailable=22.8G
+[mem] signed count chunk 42000000: MemAvailable=22.8G
+[mem] signed count chunk 43000000: MemAvailable=22.8G
+[mem] signed count chunk 44000000: MemAvailable=22.8G
+[mem] signed count chunk 45000000: MemAvailable=22.8G
+[mem] signed count chunk 46000000: MemAvailable=22.8G
+[mem] signed count chunk 47000000: MemAvailable=22.8G
+[mem] signed count chunk 48000000: MemAvailable=22.8G
+[mem] signed count chunk 49000000: MemAvailable=22.8G
+[mem] signed count chunk 50000000: MemAvailable=22.8G
+[mem] signed count chunk 51000000: MemAvailable=22.8G
+[mem] signed count chunk 52000000: MemAvailable=22.8G
+[mem] signed count chunk 53000000: MemAvailable=22.8G
+[mem] signed count chunk 54000000: MemAvailable=22.8G
+[mem] signed count chunk 55000000: MemAvailable=22.8G
+[mem] signed count chunk 56000000: MemAvailable=22.8G
+[mem] signed count chunk 57000000: MemAvailable=22.8G
+[mem] signed count chunk 58000000: MemAvailable=22.8G
+[mem] signed count chunk 59000000: MemAvailable=22.8G
+[mem] signed count chunk 60000000: MemAvailable=22.8G
+[mem] signed count chunk 61000000: MemAvailable=22.8G
+[mem] signed count chunk 62000000: MemAvailable=22.8G
+[mem] signed count chunk 63000000: MemAvailable=22.8G
+[mem] signed count chunk 64000000: MemAvailable=22.8G
+[mem] signed count chunk 65000000: MemAvailable=22.8G
+[mem] signed count chunk 66000000: MemAvailable=22.8G
+[mem] signed count chunk 67000000: MemAvailable=22.8G
+[mem] signed count chunk 68000000: MemAvailable=22.8G
+[mem] signed count chunk 69000000: MemAvailable=22.8G
+[mem] signed count chunk 70000000: MemAvailable=22.8G
+[mem] signed count chunk 71000000: MemAvailable=22.8G
+[mem] signed count chunk 72000000: MemAvailable=22.8G
+[mem] signed count chunk 73000000: MemAvailable=22.8G
+[mem] signed count chunk 74000000: MemAvailable=22.8G
+[mem] signed count chunk 75000000: MemAvailable=22.7G
+[mem] signed count chunk 76000000: MemAvailable=22.7G
+[mem] signed count chunk 77000000: MemAvailable=22.7G
+[mem] signed count chunk 78000000: MemAvailable=22.7G
+[mem] signed count chunk 79000000: MemAvailable=22.7G
+[mem] signed count chunk 80000000: MemAvailable=22.7G
+[mem] signed count chunk 81000000: MemAvailable=22.7G
+[mem] signed count chunk 82000000: MemAvailable=22.7G
+[mem] signed count chunk 83000000: MemAvailable=22.7G
+[mem] signed count chunk 84000000: MemAvailable=22.7G
+[mem] signed count chunk 85000000: MemAvailable=22.7G
+[mem] signed count chunk 86000000: MemAvailable=22.7G
+[mem] signed count chunk 87000000: MemAvailable=22.7G
+[mem] signed count chunk 88000000: MemAvailable=22.7G
+[mem] signed count chunk 89000000: MemAvailable=22.7G
+[mem] signed count chunk 90000000: MemAvailable=22.7G
+[mem] signed count chunk 91000000: MemAvailable=22.7G
+[mem] signed count chunk 92000000: MemAvailable=22.7G
+[mem] signed count chunk 93000000: MemAvailable=22.7G
+[mem] signed count chunk 94000000: MemAvailable=22.7G
+[mem] signed count chunk 95000000: MemAvailable=22.7G
+[mem] signed count chunk 96000000: MemAvailable=22.7G
+[mem] signed count chunk 97000000: MemAvailable=22.7G
+[mem] signed count chunk 98000000: MemAvailable=22.7G
+[mem] signed count chunk 99000000: MemAvailable=22.7G
+[mem] signed count chunk 100000000: MemAvailable=22.8G
+[mem] signed count chunk 101000000: MemAvailable=22.8G
+[mem] signed count chunk 102000000: MemAvailable=22.8G
+[mem] signed count chunk 103000000: MemAvailable=22.8G
+[mem] signed count chunk 104000000: MemAvailable=22.8G
+[mem] signed count chunk 105000000: MemAvailable=22.8G
+[mem] signed count chunk 106000000: MemAvailable=22.8G
+[mem] signed count chunk 107000000: MemAvailable=22.8G
+[mem] signed count chunk 108000000: MemAvailable=22.8G
+[mem] signed count chunk 109000000: MemAvailable=22.8G
+[mem] signed count chunk 110000000: MemAvailable=22.8G
+[mem] signed count chunk 111000000: MemAvailable=22.8G
+[mem] signed count chunk 112000000: MemAvailable=22.8G
+[mem] signed count chunk 113000000: MemAvailable=22.8G
+[mem] signed count chunk 114000000: MemAvailable=22.8G
+[mem] signed count chunk 115000000: MemAvailable=22.8G
+[mem] signed count chunk 116000000: MemAvailable=22.8G
+[mem] signed count chunk 117000000: MemAvailable=22.8G
+[mem] signed count chunk 118000000: MemAvailable=22.8G
+[mem] signed count chunk 119000000: MemAvailable=22.8G
+[mem] signed count chunk 120000000: MemAvailable=22.8G
+[mem] signed count chunk 121000000: MemAvailable=22.8G
+[mem] signed count chunk 122000000: MemAvailable=22.8G
+[mem] signed count chunk 123000000: MemAvailable=22.8G
+[mem] signed count chunk 124000000: MemAvailable=22.8G
+[mem] signed count chunk 125000000: MemAvailable=22.8G
+[mem] signed count chunk 126000000: MemAvailable=22.8G
+[mem] signed count chunk 127000000: MemAvailable=22.8G
+[mem] signed count chunk 128000000: MemAvailable=22.8G
+[mem] signed count chunk 129000000: MemAvailable=22.8G
+[mem] signed count chunk 130000000: MemAvailable=22.8G
+[mem] signed count chunk 131000000: MemAvailable=22.8G
+[mem] signed count chunk 132000000: MemAvailable=22.8G
+[mem] signed count chunk 133000000: MemAvailable=22.8G
+[mem] signed count chunk 134000000: MemAvailable=22.8G
+[mem] signed count chunk 135000000: MemAvailable=22.8G
+[mem] signed count chunk 136000000: MemAvailable=22.8G
+[mem] signed count chunk 137000000: MemAvailable=22.8G
+[mem] signed count chunk 138000000: MemAvailable=22.8G
+[mem] signed count chunk 139000000: MemAvailable=22.8G
+[mem] signed count chunk 140000000: MemAvailable=22.8G
+[mem] signed count chunk 141000000: MemAvailable=22.8G
+[mem] signed count chunk 142000000: MemAvailable=22.8G
+[mem] signed count chunk 143000000: MemAvailable=22.8G
+[mem] signed count chunk 144000000: MemAvailable=22.8G
+[mem] signed count chunk 145000000: MemAvailable=22.8G
+[mem] signed count chunk 146000000: MemAvailable=22.8G
+[mem] signed count chunk 147000000: MemAvailable=22.8G
+[mem] signed count chunk 148000000: MemAvailable=22.8G
+[mem] signed count chunk 149000000: MemAvailable=22.8G
+[mem] signed count chunk 150000000: MemAvailable=22.8G
+[mem] signed count chunk 151000000: MemAvailable=22.8G
+signed kept edges=134319992 / 151856684
+[mem] signed after count pass: MemAvailable=22.8G
+[mem] signed fill chunk 0: MemAvailable=22.8G
+[mem] signed fill chunk 1000000: MemAvailable=22.8G
+[mem] signed fill chunk 2000000: MemAvailable=22.8G
+[mem] signed fill chunk 3000000: MemAvailable=22.8G
+[mem] signed fill chunk 4000000: MemAvailable=22.8G
+[mem] signed fill chunk 5000000: MemAvailable=22.8G
+[mem] signed fill chunk 6000000: MemAvailable=22.8G
+[mem] signed fill chunk 7000000: MemAvailable=22.8G
+[mem] signed fill chunk 8000000: MemAvailable=22.8G
+[mem] signed fill chunk 9000000: MemAvailable=22.8G
+[mem] signed fill chunk 10000000: MemAvailable=22.8G
+[mem] signed fill chunk 11000000: MemAvailable=22.8G
+[mem] signed fill chunk 12000000: MemAvailable=22.8G
+[mem] signed fill chunk 13000000: MemAvailable=22.8G
+[mem] signed fill chunk 14000000: MemAvailable=22.8G
+[mem] signed fill chunk 15000000: MemAvailable=22.8G
+[mem] signed fill chunk 16000000: MemAvailable=22.8G
+[mem] signed fill chunk 17000000: MemAvailable=22.8G
+[mem] signed fill chunk 18000000: MemAvailable=22.8G
+[mem] signed fill chunk 19000000: MemAvailable=22.8G
+[mem] signed fill chunk 20000000: MemAvailable=22.8G
+[mem] signed fill chunk 21000000: MemAvailable=22.8G
+[mem] signed fill chunk 22000000: MemAvailable=22.8G
+[mem] signed fill chunk 23000000: MemAvailable=22.8G
+[mem] signed fill chunk 24000000: MemAvailable=22.8G
+[mem] signed fill chunk 25000000: MemAvailable=22.8G
+[mem] signed fill chunk 26000000: MemAvailable=22.8G
+[mem] signed fill chunk 27000000: MemAvailable=22.8G
+[mem] signed fill chunk 28000000: MemAvailable=22.8G
+[mem] signed fill chunk 29000000: MemAvailable=22.8G
+[mem] signed fill chunk 30000000: MemAvailable=22.8G
+[mem] signed fill chunk 31000000: MemAvailable=22.8G
+[mem] signed fill chunk 32000000: MemAvailable=22.8G
+[mem] signed fill chunk 33000000: MemAvailable=22.8G
+[mem] signed fill chunk 34000000: MemAvailable=22.8G
+[mem] signed fill chunk 35000000: MemAvailable=22.8G
+[mem] signed fill chunk 36000000: MemAvailable=22.8G
+[mem] signed fill chunk 37000000: MemAvailable=22.8G
+[mem] signed fill chunk 38000000: MemAvailable=22.8G
+[mem] signed fill chunk 39000000: MemAvailable=22.8G
+[mem] signed fill chunk 40000000: MemAvailable=22.8G
+[mem] signed fill chunk 41000000: MemAvailable=22.8G
+[mem] signed fill chunk 42000000: MemAvailable=22.8G
+[mem] signed fill chunk 43000000: MemAvailable=22.8G
+[mem] signed fill chunk 44000000: MemAvailable=22.8G
+[mem] signed fill chunk 45000000: MemAvailable=22.8G
+[mem] signed fill chunk 46000000: MemAvailable=22.8G
+[mem] signed fill chunk 47000000: MemAvailable=22.8G
+[mem] signed fill chunk 48000000: MemAvailable=22.8G
+[mem] signed fill chunk 49000000: MemAvailable=22.8G
+[mem] signed fill chunk 50000000: MemAvailable=22.8G
+[mem] signed fill chunk 51000000: MemAvailable=22.8G
+[mem] signed fill chunk 52000000: MemAvailable=22.8G
+[mem] signed fill chunk 53000000: MemAvailable=22.8G
+[mem] signed fill chunk 54000000: MemAvailable=22.8G
+[mem] signed fill chunk 55000000: MemAvailable=22.8G
+[mem] signed fill chunk 56000000: MemAvailable=22.8G
+[mem] signed fill chunk 57000000: MemAvailable=22.8G
+[mem] signed fill chunk 58000000: MemAvailable=22.8G
+[mem] signed fill chunk 59000000: MemAvailable=22.9G
+[mem] signed fill chunk 60000000: MemAvailable=22.9G
+[mem] signed fill chunk 61000000: MemAvailable=22.9G
+[mem] signed fill chunk 62000000: MemAvailable=22.9G
+[mem] signed fill chunk 63000000: MemAvailable=22.9G
+[mem] signed fill chunk 64000000: MemAvailable=22.9G
+[mem] signed fill chunk 65000000: MemAvailable=22.9G
+[mem] signed fill chunk 66000000: MemAvailable=22.8G
+[mem] signed fill chunk 67000000: MemAvailable=22.9G
+[mem] signed fill chunk 68000000: MemAvailable=22.9G
+[mem] signed fill chunk 69000000: MemAvailable=22.9G
+[mem] signed fill chunk 70000000: MemAvailable=22.9G
+[mem] signed fill chunk 71000000: MemAvailable=22.9G
+[mem] signed fill chunk 72000000: MemAvailable=22.9G
+[mem] signed fill chunk 73000000: MemAvailable=22.9G
+[mem] signed fill chunk 74000000: MemAvailable=22.9G
+[mem] signed fill chunk 75000000: MemAvailable=22.8G
+[mem] signed fill chunk 76000000: MemAvailable=22.9G
+[mem] signed fill chunk 77000000: MemAvailable=22.9G
+[mem] signed fill chunk 78000000: MemAvailable=22.9G
+[mem] signed fill chunk 79000000: MemAvailable=22.9G
+[mem] signed fill chunk 80000000: MemAvailable=22.9G
+[mem] signed fill chunk 81000000: MemAvailable=22.9G
+[mem] signed fill chunk 82000000: MemAvailable=22.9G
+[mem] signed fill chunk 83000000: MemAvailable=22.9G
+[mem] signed fill chunk 84000000: MemAvailable=22.9G
+[mem] signed fill chunk 85000000: MemAvailable=22.9G
+[mem] signed fill chunk 86000000: MemAvailable=22.9G
+[mem] signed fill chunk 87000000: MemAvailable=22.9G
+[mem] signed fill chunk 88000000: MemAvailable=22.9G
+[mem] signed fill chunk 89000000: MemAvailable=22.9G
+[mem] signed fill chunk 90000000: MemAvailable=22.9G
+[mem] signed fill chunk 91000000: MemAvailable=22.9G
+[mem] signed fill chunk 92000000: MemAvailable=22.9G
+[mem] signed fill chunk 93000000: MemAvailable=22.9G
+[mem] signed fill chunk 94000000: MemAvailable=22.9G
+[mem] signed fill chunk 95000000: MemAvailable=22.9G
+[mem] signed fill chunk 96000000: MemAvailable=22.9G
+[mem] signed fill chunk 97000000: MemAvailable=22.9G
+[mem] signed fill chunk 98000000: MemAvailable=22.9G
+[mem] signed fill chunk 99000000: MemAvailable=22.9G
+[mem] signed fill chunk 100000000: MemAvailable=22.9G
+[mem] signed fill chunk 101000000: MemAvailable=22.9G
+[mem] signed fill chunk 102000000: MemAvailable=22.9G
+[mem] signed fill chunk 103000000: MemAvailable=22.9G
+[mem] signed fill chunk 104000000: MemAvailable=22.8G
+[mem] signed fill chunk 105000000: MemAvailable=22.8G
+[mem] signed fill chunk 106000000: MemAvailable=22.8G
+[mem] signed fill chunk 107000000: MemAvailable=22.8G
+[mem] signed fill chunk 108000000: MemAvailable=22.8G
+[mem] signed fill chunk 109000000: MemAvailable=22.8G
+[mem] signed fill chunk 110000000: MemAvailable=22.8G
+[mem] signed fill chunk 111000000: MemAvailable=22.8G
+[mem] signed fill chunk 112000000: MemAvailable=22.9G
+[mem] signed fill chunk 113000000: MemAvailable=22.9G
+[mem] signed fill chunk 114000000: MemAvailable=22.9G
+[mem] signed fill chunk 115000000: MemAvailable=22.9G
+[mem] signed fill chunk 116000000: MemAvailable=22.9G
+[mem] signed fill chunk 117000000: MemAvailable=22.9G
+[mem] signed fill chunk 118000000: MemAvailable=22.9G
+[mem] signed fill chunk 119000000: MemAvailable=22.9G
+[mem] signed fill chunk 120000000: MemAvailable=22.9G
+[mem] signed fill chunk 121000000: MemAvailable=22.9G
+[mem] signed fill chunk 122000000: MemAvailable=22.9G
+[mem] signed fill chunk 123000000: MemAvailable=22.9G
+[mem] signed fill chunk 124000000: MemAvailable=22.9G
+[mem] signed fill chunk 125000000: MemAvailable=22.9G
+[mem] signed fill chunk 126000000: MemAvailable=22.9G
+[mem] signed fill chunk 127000000: MemAvailable=22.9G
+[mem] signed fill chunk 128000000: MemAvailable=22.9G
+[mem] signed fill chunk 129000000: MemAvailable=22.9G
+[mem] signed fill chunk 130000000: MemAvailable=22.9G
+[mem] signed fill chunk 131000000: MemAvailable=22.9G
+[mem] signed fill chunk 132000000: MemAvailable=22.9G
+[mem] signed fill chunk 133000000: MemAvailable=22.9G
+[mem] signed fill chunk 134000000: MemAvailable=22.9G
+[mem] signed fill chunk 135000000: MemAvailable=22.9G
+[mem] signed fill chunk 136000000: MemAvailable=22.9G
+[mem] signed fill chunk 137000000: MemAvailable=22.9G
+[mem] signed fill chunk 138000000: MemAvailable=22.9G
+[mem] signed fill chunk 139000000: MemAvailable=22.9G
+[mem] signed fill chunk 140000000: MemAvailable=22.9G
+[mem] signed fill chunk 141000000: MemAvailable=22.9G
+[mem] signed fill chunk 142000000: MemAvailable=22.9G
+[mem] signed fill chunk 143000000: MemAvailable=22.9G
+[mem] signed fill chunk 144000000: MemAvailable=22.9G
+[mem] signed fill chunk 145000000: MemAvailable=22.9G
+[mem] signed fill chunk 146000000: MemAvailable=22.9G
+[mem] signed fill chunk 147000000: MemAvailable=22.9G
+[mem] signed fill chunk 148000000: MemAvailable=22.9G
+[mem] signed fill chunk 149000000: MemAvailable=22.9G
+[mem] signed fill chunk 150000000: MemAvailable=22.9G
+[mem] signed fill chunk 151000000: MemAvailable=22.9G
+[mem] signed before CSR: MemAvailable=22.9G
+[mem] signed before spectral: MemAvailable=21.6G
+{
+  "weighting": "fast_nt_signed",
+  "n_nodes": 88384522,
+  "n_edges_raw": 151856684,
+  "n_edges_after_sign_filter": 134319992,
+  "ann_rows": 211577,
+  "nt_rows": 1835518,
+  "columns": {
+    "pre": "body_pre",
+    "post": "body_post",
+    "weight": "weight",
+    "nt_body": "body",
+    "nt_pred": "predicted_nt",
+    "ann_body": "bodyId"
+  },
+  "weight_policy": {
+    "nt_column": "consensus_nt",
+    "edges_total": 151856684,
+    "edges_signed_kept": 134319992,
+    "edges_zeroed_unknown_nt": 17536692,
+    "pre_edges_positive_ach": 80221546,
+    "pre_edges_negative_gaba_glu": 54098446,
+    "neuron_nt_counts": {
+      "unclear": 1671117,
+      "acetylcholine": 104193,
+      "glutamate": 29443,
+      "gaba": 22196,
+      "histamine": 8024,
+      "dopamine": 396,
+      "octopamine": 101,
+      "serotonin": 48
+    },
+    "sign_map": {
+      "acetylcholine": 1,
+      "gaba": -1,
+      "glutamate": -1
+    },
+    "policy": "unknown/other transmitters zeroed (not invented)"
+  },
+  "spectral_radius_before": 251.23902480955724,
+  "spectral_radius_after": 0.9000000337151879,
+  "target_spectral_radius": 0.9,
+  "nnz": 134319992,
+  "memory_strategy": "chunked memmap; int8 NT signs; reused unsigned nodes"
+}
+MemAvailable at end 23.58022689819336

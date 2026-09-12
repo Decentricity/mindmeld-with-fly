@@ -1,0 +1,65 @@
+{
+  "pass": true,
+  "items": [
+    {
+      "name": "Official MaleCNS data cached",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Schemas recorded",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Oruk-like reservoir ran",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Full MaleCNS sparse graph ran (both weightings)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "No dense full adjacency artifact",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "10k steps without numerical explosion",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "GPU memory measured and <12GB",
+      "ok": true,
+      "detail": "peak=4404515840"
+    },
+    {
+      "name": "steps/sec benchmarks present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Idempotent processed cache",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Unit tests pass",
+      "ok": true,
+      "detail": "ensorImpl.cpp:49.)\n    return torch.sparse_csr_tensor(torch.from_numpy(w.indptr.astype(np.int32)),\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 1 warning in 1.23s"
+    },
+    {
+      "name": "README exists",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reports/phase1.md exists",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

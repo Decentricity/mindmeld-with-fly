@@ -1,0 +1,31 @@
+{
+  "graph": "oruk499",
+  "weighting": "oruk_signed",
+  "device": "cuda",
+  "n_nodes": 506,
+  "n_edges": 10751,
+  "steps": 10000,
+  "load_seconds": 0.0005308371037244797,
+  "wall_seconds": 0.32150045689195395,
+  "steps_per_sec": 31104.15486395617,
+  "state_mean": -0.00459476700052619,
+  "state_std": 0.1412232518196106,
+  "state_min": -0.40380677580833435,
+  "state_max": 0.32300710678100586,
+  "nan_inf": 0,
+  "peak_vram_bytes": 264704,
+  "meta": {
+    "spectral_radius_before": 61.53895211595517,
+    "spectral_radius_after": 0.8999999935442623,
+    "target_spectral_radius": 0.9,
+    "scc_neurons": 506,
+    "connections": 10751,
+    "synapses": 523548.0,
+    "deviation_from_published": {
+      "neurons_delta": 7,
+      "connections_delta": -5114,
+      "synapses_delta": -343796.0
+    }
+  },
+  "plot": "/home/decentricity/connectome/reports/activity_oruk499_signed_10000.png"
+}

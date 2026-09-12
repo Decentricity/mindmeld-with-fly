@@ -1,0 +1,57 @@
+{
+  "published": {
+    "source": "https://oruk.ai/research/we-taught-a-fruit-fly-to-read-human-emotion",
+    "meta": "https://oruk.ai/connectome-reservoir/v1/meta.json",
+    "candidates": 512,
+    "scc_neurons": 499,
+    "connections": 15865,
+    "synapses": 867344,
+    "min_contacts": 5,
+    "alpha": 0.15,
+    "target_spectral_radius": 0.9,
+    "signs": {
+      "acetylcholine": 1,
+      "gaba": -1,
+      "glutamate": -1
+    }
+  },
+  "reconstruction_notes": {
+    "filters_applied": [
+      "superclass == cb_intrinsic",
+      "statusLabel in traced/reviewed/leaves",
+      "consensus_nt in {acetylcholine,gaba,glutamate}"
+    ],
+    "eligible_after_ann_filter": 32129,
+    "strength_definition": "total synaptic contact count as pre or post within candidate pool (proxy for unspecified 'strongest')",
+    "exact_neuron_ids": "Oruk did not publish the 499 body IDs; this is a reproducible approximation, not a bit-exact replica",
+    "nt_report": {
+      "edges_total": 10778,
+      "edges_signed_kept": 10778,
+      "edges_zeroed_unknown_nt": 0,
+      "pre_nt_counts": {
+        "acetylcholine": 5308,
+        "gaba": 4157,
+        "glutamate": 1313
+      },
+      "sign_map": {
+        "acetylcholine": 1,
+        "gaba": -1,
+        "glutamate": -1
+      },
+      "policy": "unknown/other transmitters zeroed (not invented)"
+    }
+  },
+  "candidates_top_k": 512,
+  "scc_neurons": 506,
+  "connections": 10751,
+  "synapses": 523548.0,
+  "spectral_radius_before": 61.53895211595517,
+  "spectral_radius_after": 0.8999999935442623,
+  "target_spectral_radius": 0.9,
+  "min_contacts": 5,
+  "deviation_from_published": {
+    "neurons_delta": 7,
+    "connections_delta": -5114,
+    "synapses_delta": -343796.0
+  }
+}

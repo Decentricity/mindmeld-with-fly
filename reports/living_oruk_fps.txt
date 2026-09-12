@@ -1,0 +1,20 @@
+/home/decentricity/connectome/mindmeld/reservoir.py:13: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:49.)
+  return torch.sparse_csr_tensor(torch.from_numpy(w.indptr.astype(np.int32)),
+
+Saved recording → recordings/living_oruk.npz
+FPS stats: mean=340.4  p10=194.0  p50=202.8  n=60
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/decentricity/connectome/mindmeld/living/__main__.py", line 200, in <module>
+    main()
+  File "/home/decentricity/connectome/mindmeld/living/__main__.py", line 172, in main
+    frame = engine.tick()
+            ^^^^^^^^^^^^^
+  File "/home/decentricity/connectome/mindmeld/living/engine.py", line 73, in tick
+    drive = self.stim.drive()
+            ^^^^^^^^^^^^^^^^^
+  File "/home/decentricity/connectome/mindmeld/living/stim.py", line 52, in drive
+    u = intens * torch.sin(0.03 * t + 0.6 * phase) * torch.cos(0.011 * t)
+                                                     ^^^^^^^^^^^^^^^^^^^^
+TypeError: cos(): argument 'input' (position 1) must be Tensor, not float

@@ -1,0 +1,45 @@
+{
+  "weighting": "fast_nt_signed",
+  "n_nodes": 88384522,
+  "n_edges_raw": 151856684,
+  "n_edges_after_sign_filter": 134319992,
+  "ann_rows": 211577,
+  "nt_rows": 1835518,
+  "columns": {
+    "pre": "body_pre",
+    "post": "body_post",
+    "weight": "weight",
+    "nt_body": "body",
+    "nt_pred": "predicted_nt",
+    "ann_body": "bodyId"
+  },
+  "weight_policy": {
+    "nt_column": "consensus_nt",
+    "edges_total": 151856684,
+    "edges_signed_kept": 134319992,
+    "edges_zeroed_unknown_nt": 17536692,
+    "pre_edges_positive_ach": 80221546,
+    "pre_edges_negative_gaba_glu": 54098446,
+    "neuron_nt_counts": {
+      "unclear": 1671117,
+      "acetylcholine": 104193,
+      "glutamate": 29443,
+      "gaba": 22196,
+      "histamine": 8024,
+      "dopamine": 396,
+      "octopamine": 101,
+      "serotonin": 48
+    },
+    "sign_map": {
+      "acetylcholine": 1,
+      "gaba": -1,
+      "glutamate": -1
+    },
+    "policy": "unknown/other transmitters zeroed (not invented)"
+  },
+  "spectral_radius_before": 251.23902480955724,
+  "spectral_radius_after": 0.9000000337151879,
+  "target_spectral_radius": 0.9,
+  "nnz": 134319992,
+  "memory_strategy": "chunked memmap; int8 NT signs; reused unsigned nodes"
+}

@@ -1,0 +1,49 @@
+{
+  "graph": "full",
+  "weighting": "fast_nt_signed",
+  "device": "cuda",
+  "n_nodes": 88384522,
+  "n_edges": 134319992,
+  "steps": 100,
+  "load_seconds": 0.3071669270284474,
+  "wall_seconds": 1.9340399240609258,
+  "steps_per_sec": 51.705240804972036,
+  "state_mean": 2.4870354536687955e-05,
+  "state_std": 0.13135412335395813,
+  "state_min": -0.3043748140335083,
+  "state_max": 0.30196163058280945,
+  "nan_inf": 0,
+  "peak_vram_bytes": 4262569472,
+  "meta": {
+    "spectral_radius_before": 251.23902480955724,
+    "spectral_radius_after": 0.9000000337151879,
+    "target_spectral_radius": 0.9,
+    "weight_policy": {
+      "nt_column": "consensus_nt",
+      "edges_total": 151856684,
+      "edges_signed_kept": 134319992,
+      "edges_zeroed_unknown_nt": 17536692,
+      "pre_edges_positive_ach": 80221546,
+      "pre_edges_negative_gaba_glu": 54098446,
+      "neuron_nt_counts": {
+        "unclear": 1671117,
+        "acetylcholine": 104193,
+        "glutamate": 29443,
+        "gaba": 22196,
+        "histamine": 8024,
+        "dopamine": 396,
+        "octopamine": 101,
+        "serotonin": 48
+      },
+      "sign_map": {
+        "acetylcholine": 1,
+        "gaba": -1,
+        "glutamate": -1
+      },
+      "policy": "unknown/other transmitters zeroed (not invented)"
+    },
+    "n_nodes": 88384522,
+    "nnz": 134319992
+  },
+  "plot": "/home/decentricity/connectome/reports/activity_full_fast_nt_signed_100.png"
+}

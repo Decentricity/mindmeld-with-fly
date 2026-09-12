@@ -1,0 +1,129 @@
+[mem] before full unsigned 100: MemAvailable=28.0G
+RUN full unsigned steps=100 MemAvail=28.0G
+/home/decentricity/connectome/mindmeld/reservoir.py:13: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:49.)
+  return torch.sparse_csr_tensor(torch.from_numpy(w.indptr.astype(np.int32)),
+{
+  "graph": "full",
+  "weighting": "unsigned",
+  "device": "cuda",
+  "n_nodes": 88384522,
+  "n_edges": 151856684,
+  "steps": 100,
+  "load_seconds": 2.5105541138909757,
+  "wall_seconds": 2.071152494987473,
+  "steps_per_sec": 48.282297050563066,
+  "state_mean": 2.9465560146491043e-05,
+  "state_std": 0.13135331869125366,
+  "state_min": -0.3008427321910858,
+  "state_max": 0.30580824613571167,
+  "nan_inf": 0,
+  "peak_vram_bytes": 4404357632,
+  "plot": "/home/decentricity/connectome/reports/activity_full_unsigned_100.png"
+}
+AFTER MemAvail=27.6G
+[mem] before full unsigned 1000: MemAvailable=27.6G
+RUN full unsigned steps=1000 MemAvail=27.6G
+{
+  "graph": "full",
+  "weighting": "unsigned",
+  "device": "cuda",
+  "n_nodes": 88384522,
+  "n_edges": 151856684,
+  "steps": 1000,
+  "load_seconds": 0.32750115008093417,
+  "wall_seconds": 20.673408374888822,
+  "steps_per_sec": 48.371317485057794,
+  "state_mean": 1.2848086043959484e-06,
+  "state_std": 0.10486958175897598,
+  "state_min": -0.2301483154296875,
+  "state_max": 0.23356854915618896,
+  "nan_inf": 0,
+  "peak_vram_bytes": 4404371968,
+  "plot": "/home/decentricity/connectome/reports/activity_full_unsigned_1000.png"
+}
+AFTER MemAvail=27.6G
+[mem] before full unsigned 10000: MemAvailable=27.6G
+RUN full unsigned steps=10000 MemAvail=27.6G
+{
+  "graph": "full",
+  "weighting": "unsigned",
+  "device": "cuda",
+  "n_nodes": 88384522,
+  "n_edges": 151856684,
+  "steps": 10000,
+  "load_seconds": 0.3285269970074296,
+  "wall_seconds": 206.6973964450881,
+  "steps_per_sec": 48.37990304660965,
+  "state_mean": 2.3032644094200805e-05,
+  "state_std": 0.1278049647808075,
+  "state_min": -0.33607935905456543,
+  "state_max": 0.32686474919319153,
+  "nan_inf": 0,
+  "peak_vram_bytes": 4404515840,
+  "plot": "/home/decentricity/connectome/reports/activity_full_unsigned_10000.png"
+}
+AFTER MemAvail=27.7G
+[mem] before full fast_nt_signed 100: MemAvailable=27.7G
+RUN full fast_nt_signed steps=100 MemAvail=27.7G
+{
+  "graph": "full",
+  "weighting": "fast_nt_signed",
+  "device": "cuda",
+  "n_nodes": 88384522,
+  "n_edges": 134319992,
+  "steps": 100,
+  "load_seconds": 0.3071669270284474,
+  "wall_seconds": 1.9340399240609258,
+  "steps_per_sec": 51.705240804972036,
+  "state_mean": 2.4870354536687955e-05,
+  "state_std": 0.13135412335395813,
+  "state_min": -0.3043748140335083,
+  "state_max": 0.30196163058280945,
+  "nan_inf": 0,
+  "peak_vram_bytes": 4262569472,
+  "plot": "/home/decentricity/connectome/reports/activity_full_fast_nt_signed_100.png"
+}
+AFTER MemAvail=27.6G
+[mem] before full fast_nt_signed 1000: MemAvailable=27.6G
+RUN full fast_nt_signed steps=1000 MemAvail=27.6G
+{
+  "graph": "full",
+  "weighting": "fast_nt_signed",
+  "device": "cuda",
+  "n_nodes": 88384522,
+  "n_edges": 134319992,
+  "steps": 1000,
+  "load_seconds": 0.3014654889702797,
+  "wall_seconds": 19.301720588933676,
+  "steps_per_sec": 51.80885275965157,
+  "state_mean": 2.442493268972612e-06,
+  "state_std": 0.10487016290426254,
+  "state_min": -0.24779099225997925,
+  "state_max": 0.26270902156829834,
+  "nan_inf": 0,
+  "peak_vram_bytes": 4262583808,
+  "plot": "/home/decentricity/connectome/reports/activity_full_fast_nt_signed_1000.png"
+}
+AFTER MemAvail=27.6G
+[mem] before full fast_nt_signed 10000: MemAvailable=27.6G
+RUN full fast_nt_signed steps=10000 MemAvail=27.6G
+{
+  "graph": "full",
+  "weighting": "fast_nt_signed",
+  "device": "cuda",
+  "n_nodes": 88384522,
+  "n_edges": 134319992,
+  "steps": 10000,
+  "load_seconds": 0.29886584519408643,
+  "wall_seconds": 192.96349247195758,
+  "steps_per_sec": 51.823274298651334,
+  "state_mean": 2.559429412940517e-05,
+  "state_std": 0.1278057098388672,
+  "state_min": -0.34836819767951965,
+  "state_max": 0.3365660607814789,
+  "nan_inf": 0,
+  "peak_vram_bytes": 4262727680,
+  "plot": "/home/decentricity/connectome/reports/activity_full_fast_nt_signed_10000.png"
+}
+AFTER MemAvail=27.7G
+WROTE benchmarks.json

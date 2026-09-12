@@ -1,0 +1,5 @@
+/home/decentricity/connectome/mindmeld/reservoir.py:13: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:49.)
+  return torch.sparse_csr_tensor(torch.from_numpy(w.indptr.astype(np.int32)),
+
+Saved recording → recordings/living_full.npz
+FPS stats: mean=37.0  p10=18.6  p50=43.6  n=144

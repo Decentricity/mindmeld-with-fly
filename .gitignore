@@ -1,0 +1,12 @@
+data/
+.venv/
+.DS_Store
+.env
+*.key
+*.pyc
+__pycache__/
+.pytest_cache/
+recordings/*.npz
+recordings/*.mp4
+recordings/cinema_frames_*/
+reports/*.png

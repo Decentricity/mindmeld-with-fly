@@ -1,0 +1,26 @@
+{
+  "graph": "full",
+  "weighting": "unsigned",
+  "device": "cuda",
+  "n_nodes": 88384522,
+  "n_edges": 151856684,
+  "steps": 100,
+  "load_seconds": 2.5105541138909757,
+  "wall_seconds": 2.071152494987473,
+  "steps_per_sec": 48.282297050563066,
+  "state_mean": 2.9465560146491043e-05,
+  "state_std": 0.13135331869125366,
+  "state_min": -0.3008427321910858,
+  "state_max": 0.30580824613571167,
+  "nan_inf": 0,
+  "peak_vram_bytes": 4404357632,
+  "meta": {
+    "spectral_radius_before": 583.3034687732156,
+    "spectral_radius_after": 0.8999999781890222,
+    "target_spectral_radius": 0.9,
+    "weight_policy": "all edges positive; magnitude=log1p(count); engineering baseline",
+    "n_nodes": 88384522,
+    "nnz": 151856684
+  },
+  "plot": "/home/decentricity/connectome/reports/activity_full_unsigned_100.png"
+}
