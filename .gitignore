@@ -10,3 +10,5 @@ recordings/*.npz
 recordings/*.mp4
 recordings/cinema_frames_*/
 reports/*.png
+recordings/
+recordings/meld_*

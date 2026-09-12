@@ -111,11 +111,14 @@ def status_banner(engine: LivingEngine, frame: FrameState, fps: float, renderer_
     )
 
 
-def keys_line() -> str:
-    return (
+def keys_line(engine: LivingEngine | None = None) -> str:
+    base = (
         "keys: [tab]cam  [,/./j/k]orbit  [space]pause  [n]stim  [v]view  "
         "[[/]]intens  [+/-]speed  [i]impulse  [r]reset  [R]record=NPZ+MP4  [q]quit"
     )
+    if engine is not None and getattr(engine, "eeg_session", None) is not None:
+        base += "  | eeg: [e]inject [t]rest [m]mark"
+    return base
 
 
 def disclaimer_line() -> str:
@@ -172,14 +175,27 @@ def paint_caca_frame(
     lib.caca_set_color_ansi(cv, 0x00, 0x00)
     lib.caca_clear_canvas(cv)
 
-    grid = activity_grid(engine, frame, w, grid_h, commit=commit)
+    human_h = 0
+    fly_y0 = TOP_HUD
+    fly_h = grid_h
+    session = getattr(engine, "eeg_session", None)
+    if session is not None:
+        # HUMAN on top, living fly viz below (same activity_grid as living-caca).
+        human_h = max(10, min(18, grid_h // 3))
+        from .human_panel import paint_human_panel
+
+        paint_human_panel(lib, cv, session, 0, TOP_HUD, w, human_h)
+        fly_y0 = TOP_HUD + human_h
+        fly_h = max(8, grid_h - human_h)
+
+    grid = activity_grid(engine, frame, w, fly_h, commit=commit)
 
     lib.caca_set_color_ansi(cv, 0x0F, 0x00)  # bright white on black HUD
     for i, ln in enumerate(top_hud_lines(engine, frame, fps, renderer_name)):
         padded = (ln[:w] + " " * w)[:w]
         lib.caca_put_str(cv, 0, i, padded.encode())
 
-    for y in range(grid_h):
+    for y in range(fly_h):
         for x in range(w):
             v = float(grid[y, x])
             ch = ord(CACA_CHARS[min(len(CACA_CHARS) - 1, int(v * (len(CACA_CHARS) - 1) + 1e-6))])
@@ -188,13 +204,16 @@ def paint_caca_frame(
             if v <= 0.015:
                 fg, bg = 0x00, 0x00  # empty cells stay pure black
             lib.caca_set_color_ansi(cv, fg, bg)
-            lib.caca_put_char(cv, x, TOP_HUD + y, ch)
+            lib.caca_put_char(cv, x, fly_y0 + y, ch)
+
+    if session is not None:
+        lib.caca_set_color_ansi(cv, 0x0F, 0x00)
+        lib.caca_put_str(cv, 1, fly_y0, b"FLY")
 
     lib.caca_set_color_ansi(cv, 0x0F, 0x00)
     y0 = TOP_HUD + grid_h
-    lib.caca_put_str(cv, 0, y0, (keys_line()[:w] + " " * w)[:w].encode())
+    lib.caca_put_str(cv, 0, y0, (keys_line(engine)[:w] + " " * w)[:w].encode())
     lib.caca_put_str(cv, 0, y0 + 1, (disclaimer_line()[:w] + " " * w)[:w].encode())
-
 
 def export_canvas_png(lib, cv, path: Path) -> Path:
     """Export libcaca canvas via TGA → PNG, composited onto pure black."""
@@ -274,10 +293,41 @@ class AnsiRenderer:
 
     def draw(self, engine: LivingEngine, frame: FrameState, fps: float, *, commit: bool = True):
         cols, rows = self.size()
-        grid = activity_grid(engine, frame, cols, rows, commit=commit)
-        self.stream.write("\033[H")
+        session = getattr(engine, "eeg_session", None)
+        human_h = 0
+        fly_rows = rows
         lines = [ln[:cols] for ln in top_hud_lines(engine, frame, fps, f"living/{self.name}")]
-        for y in range(rows):
+        if session is not None:
+            human_h = max(10, min(18, rows // 3))
+            fly_rows = max(8, rows - human_h)
+            # Build a float grid for the human strip, then map to BLOCKS.
+            from .human_panel import _brain_silhouette
+
+            sil = _brain_silhouette(max(3, human_h - 1), cols)
+            e = session.last_e
+            base = 0.12 * sil
+            if e is not None and len(e) >= 3:
+                base = sil * (0.15 + 0.55 * float(np.clip(e[2], 0, 1)))
+            for y in range(base.shape[0]):
+                row = []
+                for x in range(cols):
+                    v = float(base[y, x]) if x < base.shape[1] else 0.0
+                    ch = BLOCKS[min(len(BLOCKS) - 1, int(v * (len(BLOCKS) - 1) + 1e-6))]
+                    if self.color and v > 0.02:
+                        row.append(f"\033[38;5;{_color256(v)}m{ch}")
+                    else:
+                        row.append(ch)
+                if self.color:
+                    row.append("\033[0m")
+                lines.append("".join(row))
+            # conduit
+            lines.append(("=" * cols)[:cols])
+            while len(lines) < TOP_HUD + human_h:  # pad if silhouette shorter
+                lines.append(" " * cols)
+
+        grid = activity_grid(engine, frame, cols, fly_rows, commit=commit)
+        self.stream.write("\033[H")
+        for y in range(fly_rows):
             row = []
             for x in range(cols):
                 v = float(grid[y, x])
@@ -289,7 +339,7 @@ class AnsiRenderer:
             if self.color:
                 row.append("\033[0m")
             lines.append("".join(row))
-        lines.append(keys_line()[:cols])
+        lines.append(keys_line(engine)[:cols])
         lines.append(disclaimer_line()[:cols])
         self.stream.write("\n".join(lines))
         self.stream.flush()

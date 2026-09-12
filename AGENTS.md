@@ -55,3 +55,19 @@ Toggle announcements use `/home/decentricity/bin/say-alert` (RHVoice / speech-di
 **R** records activity NPZ **and** headless GPU cinema MP4 by default (`recordings/living_cinema_<timestamp>.mp4`). Opt out with `--no-cinema`. Overrides: `--cinema-mp4`, `--cinema-size 1280x720`, `--cinema-every N`.
 
 Phase II EEG mind-meld is developed in `https://github.com/Decentricity/mindmeld-with-fly` (local: `/home/decentricity/mindmeld-with-fly`). Fruit-fly swarm remains back-burner.
+
+
+## Phase II — EEG mind-meld (on top of living)
+
+Same living libcaca loop and keys (`Tab` camera, `R` record, `r` reset).
+Optional EEG drive + HUMAN pane:
+
+```bash
+./scripts/living-caca --graph full
+./scripts/mindmeld-caca --eeg-source synthetic --seconds 12 --mute
+./scripts/mindmeld-caca --mac 00:55:DA:B5:E9:46
+# or:
+python -m mindmeld.living --renderer caca --graph full --eeg-source live_muse --mac 00:55:DA:B5:E9:46
+```
+
+Extra keys when EEG is on: `e` inject toggle, `t` rest mode, `m` mark.

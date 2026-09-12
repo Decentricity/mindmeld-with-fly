@@ -65,6 +65,7 @@ class LivingEngine:
         self.step_i = 0
         self._sps = 0.0
         self.prev_activity = np.zeros(self.viz["n"], dtype=np.float32)
+        self.eeg_session = None  # optional mind-meld session (set by living --eeg-*)
         del scipy_w  # free host CSR copy after edge sample + torch upload
 
     def cycle_view(self, delta: int = 1):
@@ -87,17 +88,8 @@ class LivingEngine:
         self.prev_activity[:] = 0
         self.stim.t = 0
 
-    def tick(self) -> FrameState:
-        if not self.paused:
-            t0 = time.perf_counter()
-            for _ in range(max(1, self.speed)):
-                drive = self.stim.drive()
-                self.x = step(self.w, self.x, drive)
-                self.step_i += 1
-            if self.device.type == "cuda":
-                torch.cuda.synchronize()
-            dt = time.perf_counter() - t0
-            self._sps = (max(1, self.speed) / dt) if dt > 0 else 0.0
+    def snapshot(self) -> FrameState:
+        """FrameState from current x without advancing the reservoir."""
         act = self.x.index_select(0, self.viz_idx).detach().float().cpu().numpy()
         active = int((np.abs(act) > 0.05).sum())
         vram = int(torch.cuda.max_memory_allocated()) if self.device.type == "cuda" else None
@@ -116,3 +108,16 @@ class LivingEngine:
             yaw=float(self.yaw),
             pitch=float(self.pitch),
         )
+
+    def tick(self) -> FrameState:
+        if not self.paused:
+            t0 = time.perf_counter()
+            for _ in range(max(1, self.speed)):
+                drive = self.stim.drive()
+                self.x = step(self.w, self.x, drive)
+                self.step_i += 1
+            if self.device.type == "cuda":
+                torch.cuda.synchronize()
+            dt = time.perf_counter() - t0
+            self._sps = (max(1, self.speed) / dt) if dt > 0 else 0.0
+        return self.snapshot()

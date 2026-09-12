@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Mind-meld = living-caca + EEG. Same libcaca policy as living-caca / mplay-caca.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT="${MINDMELD_ROOT:-$ROOT}"
+PY="${ROOT}/.venv/bin/python"
+
+if [[ -n "${TMUX:-}" ]]; then
+  export CACA_DRIVER="${CACA_DRIVER:-slang}"
+else
+  export CACA_DRIVER="${CACA_DRIVER:-ncurses}"
+fi
+
+case "${TERM:-}" in
+  tmux*|screen*) ;;
+  *) export TERM="${TERM:-xterm-256color}" ;;
+esac
+
+if [[ -n "${TMUX:-}" ]] && command -v tmux >/dev/null 2>&1; then
+  tmux set-option -p alternate-screen off >/dev/null 2>&1 || true
+fi
+
+if [[ ! -x "$PY" ]]; then
+  if [[ -x /home/decentricity/connectome/.venv/bin/python ]]; then
+    PY=/home/decentricity/connectome/.venv/bin/python
+  else
+    printf '%s\n' "mindmeld-caca: missing venv at $ROOT/.venv" >&2
+    exit 1
+  fi
+fi
+
+cd "$ROOT"
+export PYTHONPATH="${ROOT}${PYTHONPATH:+:$PYTHONPATH}"
+
+# Default: live Muse. Pass through any living flags (--graph, --mute, …).
+if [[ "$#" -eq 0 ]]; then
+  set -- --eeg-source live_muse --mac 00:55:DA:B5:E9:46 --graph full
+elif [[ "$*" != *--eeg-source* ]]; then
+  set -- --eeg-source live_muse "$@"
+fi
+
+exec "$PY" -m mindmeld.living --renderer caca "$@"

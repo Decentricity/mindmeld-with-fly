@@ -7,6 +7,7 @@ import sys
 import termios
 import time
 import tty
+from contextlib import nullcontext
 from pathlib import Path
 
 import numpy as np
@@ -42,6 +43,19 @@ def _parse_args(argv=None):
     p.add_argument("--cinema-size", default="1280x720", help="Cinema resolution WxH (default 1280x720)")
     p.add_argument("--cinema-every", type=int, default=1, help="Write every Nth frame while recording")
     p.add_argument("--cinema-keep-pngs", action="store_true", help="Keep staging PNGs after MP4 encode")
+    # Phase II EEG — optional; when set, living loop drives the fly from Muse bands.
+    p.add_argument(
+        "--eeg-source",
+        default=None,
+        choices=["synthetic", "live_muse", "replay"],
+        help="Enable mind-meld: EEG → ONE fly (keeps living keys; adds e/t/m)",
+    )
+    p.add_argument("--eeg-recording", type=Path, default=None, help="EEG npz for --eeg-source replay")
+    p.add_argument("--mac", default=None, help="Muse BLE MAC for --eeg-source live_muse")
+    p.add_argument("--rest", default="tonic", choices=["silent", "tonic"])
+    p.add_argument("--eeg-gain", type=float, default=1.0)
+    p.add_argument("--win-seed", type=int, default=0)
+    p.add_argument("--seed", type=int, default=0)
     return p.parse_args(argv)
 
 
@@ -161,7 +175,44 @@ def main(argv=None):
         run_replay(args.replay, args.renderer, args.fps, args.seconds or 8.0)
         return
 
-    engine = LivingEngine(graph=args.graph, weighting=args.weighting, device=args.device)
+    eeg_session = None
+    eeg_src = None
+    if args.eeg_source:
+        from ..coupling.session import MeldSession
+        from ..eeg.source import SyntheticEEGSource, open_source
+
+        print(f"MIND MELD — EEG source={args.eeg_source} onto living fly…", flush=True)
+        boot = SyntheticEEGSource(hz=1.0, seed=args.seed)
+        eeg_session = MeldSession(
+            boot,
+            graph=args.graph,
+            weighting=args.weighting,
+            device=args.device,
+            seed=args.seed,
+            win_seed=args.win_seed,
+            rest=args.rest,
+            eeg_gain=args.eeg_gain,
+        )
+        engine = eeg_session.engine
+        print(
+            f"  graph={args.graph} n={engine.n} viz={engine.viz['n']} device={engine.device}",
+            flush=True,
+        )
+        print(f"Connecting EEG ({args.eeg_source})…", flush=True)
+        eeg_src = open_source(
+            args.eeg_source,
+            mac=args.mac,
+            recording=str(args.eeg_recording) if args.eeg_recording else None,
+            seed=args.seed,
+        )
+        eeg_session.source = eeg_src
+        engine.eeg_session = eeg_session
+        print(f"EEG ready: {eeg_src.name}", flush=True)
+    else:
+        engine = LivingEngine(
+            graph=args.graph, weighting=args.weighting, device=args.device, seed=args.seed
+        )
+
     renderer = make_renderer(args.renderer)
     rec_path = args.record or (ROOT / "recordings" / "living_demo.npz")
     recorder = Recorder(rec_path)
@@ -184,7 +235,8 @@ def main(argv=None):
         announce_stim(engine.stim.mode, engine.stim.intensity, enabled=True)
         announce_camera(engine.camera, enabled=True)
     try:
-        with RawTTY(sys.stdin.fileno()) as tty_in:
+        ctx = eeg_src if eeg_src is not None else nullcontext()
+        with ctx, RawTTY(sys.stdin.fileno()) as tty_in:
             if auto_record:
                 _start_record(recorder, cinema, voice_on=False)
             while True:
@@ -259,9 +311,26 @@ def main(argv=None):
                             voice_on,
                             {"graph": engine.graph, "weighting": engine.weighting},
                         )
+                elif eeg_session is not None and key in ("e", "E"):
+                    eeg_session.set_eeg_enabled(not eeg_session.eeg_enabled)
+                    announce(
+                        "EEG inject on." if eeg_session.eeg_enabled else "EEG inject off.",
+                        enabled=voice_on,
+                    )
+                elif eeg_session is not None and key in ("t", "T"):
+                    eeg_session.set_rest("silent" if eeg_session.rest == "tonic" else "tonic")
+                    announce(f"Rest {eeg_session.rest}.", enabled=voice_on)
+                elif eeg_session is not None and key in ("m", "M"):
+                    eeg_session.mark()
+                    announce("Marked.", enabled=voice_on)
 
                 loop_t0 = time.time()
-                frame = engine.tick()
+                if eeg_session is not None:
+                    if not engine.paused:
+                        eeg_session.tick()
+                    frame = engine.snapshot()
+                else:
+                    frame = engine.tick()
                 if cinema is not None and cinema.active:
                     cinema.push(engine, frame, fps_ema)
                 renderer.draw(engine, frame, fps_ema, commit=False)
@@ -284,6 +353,10 @@ def main(argv=None):
                 voice_on=False,
                 meta={"graph": args.graph, "weighting": args.weighting},
             )
+        if eeg_session is not None:
+            out = ROOT / "recordings" / f"meld_{int(time.time())}"
+            eeg_session.save_run(out)
+            print(f"Saved meld run → {out}", file=sys.stderr)
         renderer.end()
         if fps_samples:
             arr = np.asarray(fps_samples, dtype=np.float64)
