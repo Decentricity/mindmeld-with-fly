@@ -5,27 +5,27 @@ from dataclasses import dataclass
 
 import numpy as np
 
-# Keep band edges identical to muse/neurofeedback-muse/muse_viewer.py
+# Keep band edges identical to muse/neurofeedback-muse/muse_viewer.py (incl. gamma).
 BANDS = (
     ("delta", 1.0, 4.0),
     ("theta", 4.0, 8.0),
     ("alpha", 8.0, 13.0),
     ("beta", 13.0, 30.0),
+    ("gamma", 30.0, 45.0),
 )
-# gamma exists in the viewer but Phase II e[t] is δ θ α β only
-GAMMA = ("gamma", 30.0, 45.0)
 
+N_BANDS = len(BANDS)
 NFFT = 256
 EMA_K = 0.06
-FEATURE_NAMES = ("delta", "theta", "alpha", "beta")
+FEATURE_NAMES = ("delta", "theta", "alpha", "beta", "gamma")
 
 
 @dataclass
 class BandFeatures:
     """Normalized-ready absolute + relative band powers and calm."""
 
-    abs_power: np.ndarray  # (4,) δθαλβ
-    rel_power: np.ndarray  # (4,)
+    abs_power: np.ndarray  # (5,) δ θ α β γ
+    rel_power: np.ndarray  # (5,)
     calm: float
     quality: float  # 0..1 rough contact heuristic from channel RMS
     channel_rms: np.ndarray  # (4,) TP9 AF7 AF8 TP10 order when available
@@ -38,10 +38,10 @@ def compute_band_powers_from_eeg(
     *,
     do_filter: bool = True,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Return (abs_bp[4], rel_bp[4], chan_rms[n_ch]) using BrainFlow DataFilter.
+    """Return (abs_bp[5], rel_bp[5], chan_rms[n_ch]) using BrainFlow DataFilter.
 
     `eeg` shape: (n_channels, n_samples). Uses the same detrend/bandpass/notch
-    + Welch path as muse_viewer.py (without Qt).
+    + Welch path as muse_viewer.py (without Qt). Bandpass top is 45 Hz so gamma stays intact.
     """
     from brainflow.data_filter import (
         DataFilter,
@@ -57,7 +57,7 @@ def compute_band_powers_from_eeg(
     n_ch, n_samp = eeg.shape
     chan_rms = np.zeros(n_ch, dtype=np.float64)
     if n_samp < max(64, NFFT):
-        return np.zeros(4), np.zeros(4), chan_rms
+        return np.zeros(N_BANDS, dtype=np.float32), np.zeros(N_BANDS, dtype=np.float32), chan_rms.astype(np.float32)
 
     psd_amp = None
     freqs = None
@@ -91,7 +91,6 @@ def quality_from_rms(chan_rms: np.ndarray) -> float:
     """Rough 0..1 contact score: mid RMS = good (mirrors viewer heuristics loosely)."""
     if chan_rms.size == 0:
         return 0.0
-    # typical filtered Muse EEG std when seated: tens of uV; dead ~0; motion huge
     scores = []
     for s in chan_rms:
         s = float(s)
@@ -102,3 +101,13 @@ def quality_from_rms(chan_rms: np.ndarray) -> float:
         else:
             scores.append(float(np.clip(1.0 - abs(s - 40.0) / 80.0, 0.1, 1.0)))
     return float(np.mean(scores))
+
+
+def coerce_bands(e: np.ndarray, n: int = N_BANDS) -> np.ndarray:
+    """Pad/truncate band vectors (e.g. old 4-band recordings → 5)."""
+    e = np.asarray(e, dtype=np.float32).reshape(-1)
+    if e.size >= n:
+        return e[:n].copy()
+    out = np.zeros(n, dtype=np.float32)
+    out[: e.size] = e
+    return out

@@ -7,7 +7,7 @@ import numpy as np
 class RollingNormalizer:
     """Z-score with warm-up; returns clipped features for Win."""
 
-    def __init__(self, dim: int = 4, window: int = 250, clip: float = 3.0):
+    def __init__(self, dim: int = 5, window: int = 250, clip: float = 3.0):
         self.dim = dim
         self.window = max(8, window)
         self.clip = clip

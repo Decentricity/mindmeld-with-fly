@@ -12,8 +12,10 @@ import numpy as np
 
 from .features import (
     FEATURE_NAMES,
+    N_BANDS,
     BandFeatures,
     calm_from_rel,
+    coerce_bands,
     compute_band_powers_from_eeg,
     quality_from_rms,
 )
@@ -22,7 +24,7 @@ from .features import (
 @dataclass
 class EEGSample:
     t: float
-    e: np.ndarray  # (4,) δ θ α β — relative by default for drive stability
+    e: np.ndarray  # (5,) δ θ α β γ — relative by default for drive stability
     abs_power: np.ndarray
     calm: float
     quality: float
@@ -69,22 +71,33 @@ class SyntheticEEGSource(EEGSource):
         phase = 2 * np.pi * (t / 8.0)
         raw = np.array(
             [
-                0.15 + 0.35 * (0.5 + 0.5 * np.sin(phase)),
-                0.15 + 0.35 * (0.5 + 0.5 * np.sin(phase + 1.2)),
-                0.15 + 0.35 * (0.5 + 0.5 * np.sin(phase + 2.4)),
-                0.15 + 0.35 * (0.5 + 0.5 * np.sin(phase + 3.6)),
+                0.12 + 0.30 * (0.5 + 0.5 * np.sin(phase)),
+                0.12 + 0.30 * (0.5 + 0.5 * np.sin(phase + 1.0)),
+                0.12 + 0.30 * (0.5 + 0.5 * np.sin(phase + 2.0)),
+                0.12 + 0.30 * (0.5 + 0.5 * np.sin(phase + 3.0)),
+                0.10 + 0.28 * (0.5 + 0.5 * np.sin(phase + 4.0)),
             ],
             dtype=np.float32,
         )
         rel = raw / (raw.sum() + 1e-12)
         abs_p = rel * (50.0 + 20.0 * np.sin(phase * 0.5))
+        # Vary per-channel RMS so electrode regions light up differently (Muse order).
+        channel_rms = np.array(
+            [
+                25.0 + 35.0 * (0.5 + 0.5 * np.sin(phase + 0.3)),  # TP9
+                30.0 + 40.0 * (0.5 + 0.5 * np.sin(phase + 1.1)),  # AF7
+                28.0 + 38.0 * (0.5 + 0.5 * np.sin(phase + 2.0)),  # AF8
+                22.0 + 32.0 * (0.5 + 0.5 * np.sin(phase + 2.9)),  # TP10
+            ],
+            dtype=np.float32,
+        )
         return EEGSample(
             t=t,
             e=rel.astype(np.float32),
             abs_power=abs_p.astype(np.float32),
             calm=calm_from_rel(rel),
             quality=1.0,
-            channel_rms=np.full(4, 40.0, dtype=np.float32),
+            channel_rms=channel_rms,
         )
 
 
@@ -97,7 +110,21 @@ class ReplayEEGSource(EEGSource):
         data = np.load(self.path, allow_pickle=False)
         self.t = np.asarray(data["t"], dtype=np.float64)
         self.e = np.asarray(data["e"], dtype=np.float32)
+        if self.e.ndim == 1:
+            self.e = self.e.reshape(-1, 1)
+        if self.e.shape[1] != N_BANDS:
+            padded = np.zeros((len(self.e), N_BANDS), dtype=np.float32)
+            take = min(self.e.shape[1], N_BANDS)
+            padded[:, :take] = self.e[:, :take]
+            self.e = padded
         self.abs_power = np.asarray(data.get("abs_power", self.e), dtype=np.float32)
+        if self.abs_power.ndim == 1:
+            self.abs_power = self.abs_power.reshape(-1, N_BANDS)
+        if self.abs_power.shape[1] != N_BANDS:
+            padded = np.zeros((len(self.abs_power), N_BANDS), dtype=np.float32)
+            take = min(self.abs_power.shape[1], N_BANDS)
+            padded[:, :take] = self.abs_power[:, :take]
+            self.abs_power = padded
         self.calm = np.asarray(data.get("calm", np.zeros(len(self.t))), dtype=np.float32)
         self.quality = np.asarray(data.get("quality", np.ones(len(self.t))), dtype=np.float32)
         self.channel_rms = np.asarray(
@@ -128,8 +155,8 @@ class ReplayEEGSource(EEGSource):
         self.i += 1
         return EEGSample(
             t=float(self.t[i]),
-            e=self.e[i],
-            abs_power=self.abs_power[i],
+            e=coerce_bands(self.e[i]),
+            abs_power=coerce_bands(self.abs_power[i]),
             calm=float(self.calm[i]),
             quality=float(self.quality[i]),
             channel_rms=self.channel_rms[i],
@@ -159,8 +186,8 @@ class LiveMuseEEGSource(EEGSource):
         self.fs = float(BoardShim.get_sampling_rate(self.board_id))
         self.eeg_rows = BoardShim.get_eeg_channels(self.board_id)
         self.n_points = int(self.fs * window_sec)
-        self._ema_rel = np.zeros(4, dtype=np.float32)
-        self._ema_abs = np.zeros(4, dtype=np.float32)
+        self._ema_rel = np.zeros(N_BANDS, dtype=np.float32)
+        self._ema_abs = np.zeros(N_BANDS, dtype=np.float32)
         self._calm = 0.4
         self._t0 = time.perf_counter()
         self._period = 1.0 / 25.0

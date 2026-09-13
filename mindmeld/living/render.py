@@ -18,8 +18,9 @@ from .views import activity_grid
 
 BLOCKS = " ·░▒▓█"
 CACA_CHARS = " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
-TOP_HUD = 3  # connectome + stim + status (drawn above the image)
+TOP_HUD = 3  # connectome + stim + status (drawn above the fly image)
 BOTTOM_HUD = 2  # keys + disclaimer
+EEG_TOP_HUD = 2  # species + live EEG status (mind-meld only; above human pane)
 
 
 def _color256(v: float) -> int:
@@ -123,9 +124,46 @@ def keys_line(engine: LivingEngine | None = None) -> str:
 
 def disclaimer_line() -> str:
     return (
+        "fly bands = reservoir spectra (not insect EEG) | "
         "assumed sparse reservoir dynamics — not biophysics | "
         "R records NPZ+cinema MP4 by default (--no-cinema to opt out)"
     )
+
+
+def eeg_banner_lines(engine: LivingEngine, frame: FrameState, fps: float) -> list[str]:
+    """Title block for the HUMAN / Muse panel (above the silhouette)."""
+    session = getattr(engine, "eeg_session", None)
+    if session is None:
+        return []
+    sample = session.last_sample
+    src = getattr(session.source, "name", "eeg")
+    q = int(round(sample.quality * 100)) if sample is not None else 0
+    calm = int(round(sample.calm * 100)) if sample is not None else 0
+    e = session.last_e
+    e_bit = ""
+    if e is not None and len(e) >= 5:
+        e_bit = (
+            f" | hum δ={e[0]:.2f} θ={e[1]:.2f} α={e[2]:.2f} β={e[3]:.2f} γ={e[4]:.2f}"
+            f" |||e||={float(np.linalg.norm(e)):.2f}"
+        )
+    elif e is not None and len(e) >= 4:
+        e_bit = f" | δ={e[0]:.2f} θ={e[1]:.2f} α={e[2]:.2f} β={e[3]:.2f}"
+    fly = getattr(session, "last_fly_rel", None)
+    if fly is not None and len(fly) >= 5:
+        e_bit += (
+            f" | fly δ={fly[0]:.2f} θ={fly[1]:.2f} α={fly[2]:.2f}"
+            f" β={fly[3]:.2f} γ={fly[4]:.2f}"
+        )
+    inj = "on" if session.eeg_enabled else "off"
+    line1 = (
+        "EEG: Homo sapiens — Muse 2 dry electrodes (AF7/AF8 forehead, TP9/TP10 temporal) "
+        "— illustrative scalp map (not spatial tomography) — bands δ θ α β γ"
+    )
+    line2 = (
+        f"src={src} | inject={inj} | rest={session.rest} | quality={q}% | calm={calm}% | "
+        f"{'PAUSE' if frame.paused else 'LIVE'} | fps={fps:.1f}{e_bit}"
+    )
+    return [line1, line2]
 
 
 def top_hud_lines(engine: LivingEngine, frame: FrameState, fps: float, renderer_name: str) -> list[str]:
@@ -134,6 +172,13 @@ def top_hud_lines(engine: LivingEngine, frame: FrameState, fps: float, renderer_
         stim_banner(engine, frame),
         status_banner(engine, frame, fps, renderer_name),
     ]
+
+
+def _put_hud_lines(lib, cv, lines: list[str], y0: int, width: int) -> None:
+    lib.caca_set_color_ansi(cv, 0x0F, 0x00)
+    for i, ln in enumerate(lines):
+        padded = (ln[:width] + " " * width)[:width]
+        lib.caca_put_str(cv, 0, y0 + i, padded.encode())
 
 
 def _bind_caca(lib) -> None:
@@ -157,6 +202,66 @@ def _bind_caca(lib) -> None:
         lib.caca_free.argtypes = [ctypes.c_void_p]
 
 
+def _paint_fly_group(
+    lib,
+    cv,
+    engine: LivingEngine,
+    frame: FrameState,
+    x0: int,
+    y0: int,
+    width: int,
+    height: int,
+    *,
+    commit: bool,
+) -> None:
+    """Connectome activity (left) + FlyBrains ASCII fly (right)."""
+    from .ascii_fly import paint_ascii_fly
+    from .views import activity_grid
+
+    if width < 20 or height < 4:
+        grid = activity_grid(engine, frame, width, height, commit=commit)
+        for y in range(height):
+            row = grid[y]
+            for x in range(width):
+                v = float(row[x])
+                if v <= 0.015:
+                    continue
+                ch = ord(CACA_CHARS[min(len(CACA_CHARS) - 1, int(v * (len(CACA_CHARS) - 1) + 1e-6))])
+                pair = _caca_ansi_pair(v)
+                fg = pair & 0x0F
+                lib.caca_set_color_ansi(cv, fg, 0x00)
+                lib.caca_put_char(cv, x0 + x, y0 + y, ch)
+        return
+
+    # ~58% connectome, ~40% ASCII fly (FlyBrains housefly) — fly needs width to read
+    split = max(20, int(width * 0.58))
+    conn_w = split - 1
+    fly_w = max(14, width - split - 1)
+    fly_x = x0 + split + 1
+
+    # vertical divider
+    lib.caca_set_color_ansi(cv, 0x07, 0x00)
+    for y in range(height):
+        lib.caca_put_char(cv, x0 + split, y0 + y, ord("|"))
+
+    grid = activity_grid(engine, frame, conn_w, height, commit=commit)
+    for y in range(height):
+        row = grid[y]
+        for x in range(conn_w):
+            v = float(row[x])
+            if v <= 0.015:
+                continue
+            ch = ord(CACA_CHARS[min(len(CACA_CHARS) - 1, int(v * (len(CACA_CHARS) - 1) + 1e-6))])
+            pair = _caca_ansi_pair(v)
+            fg = pair & 0x0F
+            lib.caca_set_color_ansi(cv, fg, 0x00)
+            lib.caca_put_char(cv, x0 + x, y0 + y, ch)
+
+    lib.caca_set_color_ansi(cv, 0x0F, 0x00)
+    lib.caca_put_str(cv, x0 + 1, y0, b"CNS")
+    paint_ascii_fly(lib, cv, fly_x, y0, fly_w, height, engine=engine, frame=frame)
+
+
 def paint_caca_frame(
     lib,
     cv,
@@ -170,45 +275,45 @@ def paint_caca_frame(
     """Paint one living frame onto an existing libcaca canvas (black background)."""
     w = lib.caca_get_canvas_width(cv)
     h = lib.caca_get_canvas_height(cv)
-    grid_h = max(8, h - TOP_HUD - BOTTOM_HUD)
+    session = getattr(engine, "eeg_session", None)
+
     # True black backdrop — never leave stale glyphs / light cells.
     lib.caca_set_color_ansi(cv, 0x00, 0x00)
     lib.caca_clear_canvas(cv)
 
-    human_h = 0
-    fly_y0 = TOP_HUD
-    fly_h = grid_h
-    session = getattr(engine, "eeg_session", None)
     if session is not None:
-        # HUMAN on top, living fly viz below (same activity_grid as living-caca).
-        human_h = max(10, min(18, grid_h // 3))
+        # Layout (top → bottom):
+        #   EEG title HUD → HUMAN pane → CONNECTOME/fly HUD → FLY group → keys
+        eeg_lines = eeg_banner_lines(engine, frame, fps)
+        fly_hud = top_hud_lines(engine, frame, fps, renderer_name)
+        eeg_h = len(eeg_lines)
+        fly_hud_h = len(fly_hud)
+        usable = max(16, h - eeg_h - fly_hud_h - BOTTOM_HUD)
+        human_h = max(16, usable // 2)
+        fly_h = max(8, usable - human_h)
+        human_y0 = eeg_h
+        fly_hud_y0 = human_y0 + human_h
+        fly_y0 = fly_hud_y0 + fly_hud_h
+
+        _put_hud_lines(lib, cv, eeg_lines, 0, w)
         from .human_panel import paint_human_panel
 
-        paint_human_panel(lib, cv, session, 0, TOP_HUD, w, human_h)
-        fly_y0 = TOP_HUD + human_h
-        fly_h = max(8, grid_h - human_h)
+        paint_human_panel(lib, cv, session, 0, human_y0, w, human_h)
+        _put_hud_lines(lib, cv, fly_hud, fly_hud_y0, w)
+        _paint_fly_group(lib, cv, engine, frame, 0, fly_y0, w, fly_h, commit=commit)
 
-    grid = activity_grid(engine, frame, w, fly_h, commit=commit)
-
-    lib.caca_set_color_ansi(cv, 0x0F, 0x00)  # bright white on black HUD
-    for i, ln in enumerate(top_hud_lines(engine, frame, fps, renderer_name)):
-        padded = (ln[:w] + " " * w)[:w]
-        lib.caca_put_str(cv, 0, i, padded.encode())
-
-    for y in range(fly_h):
-        for x in range(w):
-            v = float(grid[y, x])
-            ch = ord(CACA_CHARS[min(len(CACA_CHARS) - 1, int(v * (len(CACA_CHARS) - 1) + 1e-6))])
-            pair = _caca_ansi_pair(v)
-            fg, bg = pair & 0x0F, (pair >> 4) & 0x0F  # bg nibble is 0 → black
-            if v <= 0.015:
-                fg, bg = 0x00, 0x00  # empty cells stay pure black
-            lib.caca_set_color_ansi(cv, fg, bg)
-            lib.caca_put_char(cv, x, fly_y0 + y, ch)
-
-    if session is not None:
+        y0 = fly_y0 + fly_h
         lib.caca_set_color_ansi(cv, 0x0F, 0x00)
-        lib.caca_put_str(cv, 1, fly_y0, b"FLY")
+        lib.caca_put_str(cv, 0, y0, (keys_line(engine)[:w] + " " * w)[:w].encode())
+        if y0 + 1 < h:
+            lib.caca_put_str(cv, 0, y0 + 1, (disclaimer_line()[:w] + " " * w)[:w].encode())
+        return
+
+    # Plain living-caca (no EEG): HUD + connectome|ascii-fly.
+    grid_h = max(8, h - TOP_HUD - BOTTOM_HUD)
+    fly_y0 = TOP_HUD
+    _put_hud_lines(lib, cv, top_hud_lines(engine, frame, fps, renderer_name), 0, w)
+    _paint_fly_group(lib, cv, engine, frame, 0, fly_y0, w, grid_h, commit=commit)
 
     lib.caca_set_color_ansi(cv, 0x0F, 0x00)
     y0 = TOP_HUD + grid_h
@@ -301,9 +406,9 @@ class AnsiRenderer:
             human_h = max(10, min(18, rows // 3))
             fly_rows = max(8, rows - human_h)
             # Build a float grid for the human strip, then map to BLOCKS.
-            from .human_panel import _brain_silhouette
+            from .human_panel import _brain_mask
 
-            sil = _brain_silhouette(max(3, human_h - 1), cols)
+            sil = _brain_mask(max(3, human_h - 1), cols).astype(np.float32)
             e = session.last_e
             base = 0.12 * sil
             if e is not None and len(e) >= 3:
